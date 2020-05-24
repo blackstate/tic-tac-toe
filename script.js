@@ -1,11 +1,26 @@
 const gameBoard = (function () {
     const _board = document.querySelector("div#gameBoard");
     const _boardArr = [
-        [undefined,undefined,undefined],
-        [undefined,undefined,undefined],
-        [undefined,undefined,undefined]
+        [1,undefined,undefined],
+        [undefined,1,undefined],
+        [undefined,undefined,1]
     ];
     let currentSym = 1;
+    let currentMarker = "x";
+   
+    function _addTic() {
+        if (this.innerHTML != "")
+            return;
+
+        this.innerHTML = currentMarker;
+        
+        if (currentMarker == "o") {
+            currentMarker = "x";
+        }
+        else {
+            currentMarker = "o";
+        }
+    }
 
     function _getValue (val) {
         if (val === undefined) {
@@ -19,7 +34,7 @@ const gameBoard = (function () {
         }
     }
 
-    function updateSymbol () {
+    function _updateSymbol () {
         if (currentSym == 1) {
             currentSym = 0;
         }
@@ -39,8 +54,18 @@ const gameBoard = (function () {
         else  {
             _boardArr[2][(position-6)] = currentSym;
         }
-        updateSymbol ();
+        console.log(_boardArr);
+        _updateSymbol ();
     }
+
+    const addCellEvent = () => {
+        let boardCell = Array.from(document.querySelectorAll(".cell"));
+        boardCell.forEach((cell, i) => {
+            cell.addEventListener('click', _addTic.bind(cell));
+            cell.addEventListener('click', updateBoard.bind(i))
+        })
+    }
+
 
     function render () {
         let cell;
@@ -54,41 +79,18 @@ const gameBoard = (function () {
                 _board.appendChild(cell);
             })
         })
-        displayController.addCellEvent();
+        addCellEvent();
     }
 
     return {
-        render, updateBoard
+        render
     }
 })();
 
 const displayController = (function() {
    
-    let currentMarker = "x";
-   
-    function addTic() {
-        if (this.innerHTML != "")
-            return;
-
-        this.innerHTML = currentMarker;
-        
-        if (currentMarker == "o") {
-            currentMarker = "x";
-        }
-        else {
-            currentMarker = "o";
-        }
-    }
-
-    const addCellEvent = () => {
-        let boardCell = Array.from(document.querySelectorAll(".cell"));
-        boardCell.forEach((cell, i) => {
-            cell.addEventListener('click', addTic.bind(cell));
-            cell.addEventListener('click', gameBoard.updateBoard.bind(i))
-        })
-    }
     return {
-        addCellEvent
+        
     }
 })();
 

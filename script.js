@@ -7,6 +7,7 @@ const gameBoard = (function () {
     ];
     let currentSym = 1;
     let currentMarker = "x";
+    let moveNum = 0;
     let a, b, c;
     let winningCombo = []
 
@@ -25,7 +26,6 @@ const gameBoard = (function () {
             [_boardArr[0][2], _boardArr[1][1], _boardArr[2][0]]
         ]
         
-
         for (i = 0; i < 8; i++) {
             a = winningCombo[i][0];
             b = winningCombo[i][1];
@@ -37,8 +37,24 @@ const gameBoard = (function () {
 
             if (a == b && a == c && b == c) {
                 console.log(_boardArr);
-                console.log('winner');
+                console.log('winner ' + currentMarker);
+                return;
             }
+        }
+
+        if (moveNum == 9) {
+            alert("draw");
+            return;
+        }
+
+    }
+
+    function _updateMarker () {
+        if (currentMarker == "o") {
+            currentMarker = "x";
+        }
+        else {
+            currentMarker = "o";
         }
     }
 
@@ -47,13 +63,6 @@ const gameBoard = (function () {
             return;
 
         this.innerHTML = currentMarker;
-        
-        if (currentMarker == "o") {
-            currentMarker = "x";
-        }
-        else {
-            currentMarker = "o";
-        }
     }
 
     function _getValue (val) {
@@ -92,15 +101,18 @@ const gameBoard = (function () {
             if (_boardArr[2][position-6] == undefined)
                 _boardArr[2][(position-6)] = currentSym;
         }
+
+        _checkWin ();
         _updateSymbol ();
+        _updateMarker ();
+        moveNum ++;
     }
 
     function addCellEvent () {
         let boardCell = Array.from(document.querySelectorAll(".cell"));
         boardCell.forEach((cell, i) => {
             cell.addEventListener('click', _addTic.bind(cell));
-            cell.addEventListener('click', _updateBoard.bind(i))
-            cell.addEventListener('click', _checkWin)
+            cell.addEventListener('click', _updateBoard.bind(i));
         })
     }
 

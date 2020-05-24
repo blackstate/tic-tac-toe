@@ -102,19 +102,22 @@ const gameBoard = (function () {
             if (_boardArr[2][position-6] == undefined)
                 _boardArr[2][(position-6)] = currentSym;
         }
-
         _checkWin ();
         _updateSymbol ();
         _updateMarker ();
+
     }
 
-    function _reset () {
-        for(i = 0; i < _boardArr.length; i++) {
+    function reset () {
+        for(i = 0; i < 3; i++) {
             _boardArr[i] = [undefined, undefined, undefined];
         }
+        moveNum = 0;
+        render();
+
     }
 
-    function addCellEvent () {
+    function _addCellEvent () {
         let boardCell = Array.from(document.querySelectorAll(".cell"));
         boardCell.forEach((cell, i) => {
             cell.addEventListener('click', _addTic.bind(cell));
@@ -125,6 +128,7 @@ const gameBoard = (function () {
     function render () {
         let cell;
         _board.innerHTML = "";
+        _board.classList.remove("hide");
         
         _boardArr.forEach((rowArr) => {
             rowArr.forEach((value) => {
@@ -134,21 +138,25 @@ const gameBoard = (function () {
                 _board.appendChild(cell);
             })
         })
-        addCellEvent();
+        _addCellEvent();
     }
-
+    
     return {
-        render, _reset
+        render, reset
     }
 })();
 
 const displayController = (function() {
-   
+    let startButton = document.querySelector('#start');
+    let deleteButton = document.querySelector('#reset');
+    
+    deleteButton.addEventListener("click", gameBoard.reset);
+    startButton.addEventListener("click", gameBoard.render);
     return {
         
     }
 })();
 
-gameBoard.render();
+
 
 

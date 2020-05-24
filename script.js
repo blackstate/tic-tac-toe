@@ -43,7 +43,7 @@ const gameBoard = (function () {
         }
 
         if (moveNum == 9) {
-            alert("draw");
+            console.log('draw');
             return;
         }
 
@@ -86,7 +86,8 @@ const gameBoard = (function () {
         }
     }
 
-    function _updateBoard () {
+    function _update () {
+        moveNum++;
         let position = this;
 
         if (position >= 0 && position < 3) {
@@ -105,14 +106,19 @@ const gameBoard = (function () {
         _checkWin ();
         _updateSymbol ();
         _updateMarker ();
-        moveNum ++;
+    }
+
+    function _reset () {
+        for(i = 0; i < _boardArr.length; i++) {
+            _boardArr[i] = [undefined, undefined, undefined];
+        }
     }
 
     function addCellEvent () {
         let boardCell = Array.from(document.querySelectorAll(".cell"));
         boardCell.forEach((cell, i) => {
             cell.addEventListener('click', _addTic.bind(cell));
-            cell.addEventListener('click', _updateBoard.bind(i));
+            cell.addEventListener('click', _update.bind(i));
         })
     }
 
@@ -132,7 +138,7 @@ const gameBoard = (function () {
     }
 
     return {
-        render
+        render, _reset
     }
 })();
 
@@ -145,19 +151,4 @@ const displayController = (function() {
 
 gameBoard.render();
 
-// const player = (playerSymbol, playerName) => { 
-//     let name = playerName;
-//     let symbol = playerSymbol;
-    
-//     const sayName = () => {
-//         console.log("Hi my name is " + name);   
-//     }
-
-//     return  {
-//         sayName
-//     }
-// };
-
-// let jimmy = player("cross", "jimmy");
-// let stevie = player("stevie", "nought");
 

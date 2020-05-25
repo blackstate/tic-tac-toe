@@ -1,6 +1,6 @@
 const gameBoard = (function () {
     const _board = document.querySelector("div#gameBoard");
-    const tags = document.querySelectorAll('div.player-tag');
+    const tags = Array.from(document.querySelectorAll('div.player-tag'));
 
     const _boardArr = [
         [undefined,undefined,undefined],
@@ -94,6 +94,11 @@ const gameBoard = (function () {
         })
     }
 
+    function _resetTags () {
+        tags[0].classList.add('turn');
+        tags[1].classList.remove('turn');
+    }
+
     function _update () {
         moveNum++;
         let position = this;
@@ -125,8 +130,8 @@ const gameBoard = (function () {
         moveNum = 0;
         currentSym = 1;
         currentMarker = "x";
+        _resetTags();
         render();
-
     }
 
     function _addCellEvent () {
@@ -169,15 +174,15 @@ const display = (function() {
         return names.map(name => name.value)
     }
     
-    function _checkRunning () {
-        let cells = Array.from(_board.children)
+    // function _checkRunning () {
+    //     let cells = Array.from(_board.children)
 
-        cells.some(function(cell) {
-            if (cell.innerHTML !== "") {
-                return true;
-            }
-        })
-    }
+    //     cells.some(function(cell) {
+    //         if (cell.innerHTML !== "") {
+    //             return true;
+    //         }
+    //     })
+    // }
 
     function _toggleGame () {
         if(_game.classList.contains('hide')) {

@@ -154,6 +154,8 @@ const display = (function() {
     const deleteButton = document.querySelector('#reset');
     const input = document.querySelector('.input-box');
     const _board = document.querySelector("div#gameBoard");
+    const _game = document.querySelector('div.game');
+    const tags = document.querySelectorAll('div.player-tag');
     
     function get_names () {
         let names = Array.from(document.querySelectorAll('input'));
@@ -170,12 +172,12 @@ const display = (function() {
         })
     }
 
-    function _toggleBoard () {
-        if(_board.classList.contains('hide')) {
-            _board.classList.remove('hide');
+    function _toggleGame () {
+        if(_game.classList.contains('hide')) {
+            _game.classList.remove('hide');
         }
         else {
-            _board.classList.add('hide');
+            _game.classList.add('hide');
         }
     }
 
@@ -189,8 +191,7 @@ const display = (function() {
     }
     function _startGame () {
         
-
-        if (_board.innerHTML == "" || (_board.classList.contains('hide'))) {
+        if (_board.innerHTML == "" || (_game.classList.contains('hide'))) {
             startButton.innerHTML = "< back";
         }
 
@@ -201,7 +202,7 @@ const display = (function() {
         }
 
         _toggleInputbox();
-        _toggleBoard();
+        _toggleGame();
         gameBoard.render();
     }
     deleteButton.addEventListener("click", gameBoard.reset);

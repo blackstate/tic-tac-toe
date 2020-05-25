@@ -109,10 +109,14 @@ const gameBoard = (function () {
     }
 
     function reset () {
+        if (_board.innerHTML == "")
+            return
         for(i = 0; i < 3; i++) {
             _boardArr[i] = [undefined, undefined, undefined];
         }
         moveNum = 0;
+        currentSym = 1;
+        currentMarker = "x";
         render();
 
     }
@@ -128,7 +132,6 @@ const gameBoard = (function () {
     function render () {
         let cell;
         _board.innerHTML = "";
-        _board.classList.remove("hide");
         
         _boardArr.forEach((rowArr) => {
             rowArr.forEach((value) => {
@@ -146,14 +149,66 @@ const gameBoard = (function () {
     }
 })();
 
-const displayController = (function() {
-    let startButton = document.querySelector('#start');
-    let deleteButton = document.querySelector('#reset');
+const display = (function() {
+    const startButton = document.querySelector('#start');
+    const deleteButton = document.querySelector('#reset');
+    const input = document.querySelector('.input-box');
+    const _board = document.querySelector("div#gameBoard");
     
-    deleteButton.addEventListener("click", gameBoard.reset);
-    startButton.addEventListener("click", gameBoard.render);
-    return {
+    function get_names () {
+        let names = Array.from(document.querySelectorAll('input'));
+        return names.map(name => name.value)
+    }
+    
+    function _checkRunning () {
+        let cells = Array.from(_board.children)
+
+        cells.some(function(cell) {
+            if (cell.innerHTML !== "") {
+                return true;
+            }
+        })
+    }
+
+    function _toggleBoard () {
+        if(_board.classList.contains('hide')) {
+            _board.classList.remove('hide');
+        }
+        else {
+            _board.classList.add('hide');
+        }
+    }
+
+    function _toggleInputbox () {
+        if(input.classList.contains('hide')) {
+            input.classList.remove('hide');
+        }
+        else {
+            input.classList.add('hide');
+        }
+    }
+    function _startGame () {
         
+
+        if (_board.innerHTML == "" || (_board.classList.contains('hide'))) {
+            startButton.innerHTML = "< back";
+        }
+
+        else {
+            _board.innerHTML == ""
+            startButton.innerHTML = "start >";
+            gameBoard.reset();
+        }
+
+        _toggleInputbox();
+        _toggleBoard();
+        gameBoard.render();
+    }
+    deleteButton.addEventListener("click", gameBoard.reset);
+    startButton.addEventListener("click", _startGame);
+
+    return {
+        get_names, _checkRunning
     }
 })();
 

@@ -79,6 +79,28 @@ footer {
 	margin-top: 50px;
 }
 
+.input-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+}
+
+#player1,#player2 {
+	background-color: #3b4148;
+    border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+	border-radius: 0.25rem;
+	padding: 1rem;
+	color: #fafafa;
+}
+input {
+	border: 0;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+}
 button {
 	font-size: 28px;
 	border: 0;
@@ -98,6 +120,9 @@ button {
     text-decoration: none;
 }
 
+::placeholder {
+	color: #fafafa
+}
   
 .cell {
 	background-color: #363434;

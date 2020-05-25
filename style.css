@@ -200,3 +200,20 @@ button {
 	border-bottom: 4px solid #ababab;
 	font-size: 18px;
 }
+
+.footer-img {
+	width: 20px;
+	height: 20px;
+}
+
+a.nostyle:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+a.nostyle:visited {
+    text-decoration: inherit;
+    color: inherit;
+	cursor: pointer;
+}

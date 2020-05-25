@@ -1,6 +1,7 @@
 const gameBoard = (function () {
     const _board = document.querySelector("div#gameBoard");
     const tags = Array.from(document.querySelectorAll('div.player-tag'));
+    const announce = document.querySelector('#announce');
 
     const _boardArr = [
         [undefined,undefined,undefined],
@@ -13,7 +14,6 @@ const gameBoard = (function () {
     let a, b, c;
     let winningCombo = []
 
-    
     function _checkWin () {
         winningCombo = [
             [_boardArr[0][0], _boardArr[0][1], _boardArr[0][2]],
@@ -38,19 +38,30 @@ const gameBoard = (function () {
             }
 
             if (a == b && a == c && b == c) {
-                console.log(_boardArr);
-                console.log('winner ' + currentMarker);
+                announceWin();
                 return;
             }
         }
 
         if (moveNum == 9) {
-            console.log('draw');
+            announceWin("draw");
             return;
         }
-
     }
 
+    function announceWin (drawVal) {
+        let winText = document.querySelector('div.win-text')
+        let winner;
+        if (drawVal) {
+            winText.innerHTML = "Draw!";
+        }
+        else {
+            winner = currentSym == 1 ? display.getNames()[0] : display.getNames()[1];
+            winText.innerHTML = `${winner} wins!`;
+        }
+        
+        announce.classList.remove('hide');
+    }
     function _updateMarker () {
         if (currentMarker == "o") {
             currentMarker = "x";
@@ -121,9 +132,11 @@ const gameBoard = (function () {
         _toggleTags();
     }
 
+
     function reset () {
         if (_board.innerHTML == "")
             return
+
         for(i = 0; i < 3; i++) {
             _boardArr[i] = [undefined, undefined, undefined];
         }
@@ -145,7 +158,6 @@ const gameBoard = (function () {
     function render () {
         let cell;
         _board.innerHTML = "";
-        
         _boardArr.forEach((rowArr) => {
             rowArr.forEach((value) => {
                 cell = document.createElement('div');
@@ -165,13 +177,22 @@ const gameBoard = (function () {
 const display = (function() {
     const startButton = document.querySelector('#start');
     const deleteButton = document.querySelector('#reset');
+
+    const again = document.querySelector('#again');
+    const announce = document.querySelector('#announce');
+
     const input = document.querySelector('.input-box');
     const _board = document.querySelector("div#gameBoard");
     const _game = document.querySelector('div.game');
     
-    function get_names () {
+    function getNames () {
         let names = Array.from(document.querySelectorAll('input'));
-        return names.map(name => name.value)
+        if (names[0].value == "" || names[1].value == "") {
+            return ["Player 1", "Player 2"];
+        }
+        else {
+            return names.map(name => name.value)
+        }
     }
     
     // function _checkRunning () {
@@ -193,6 +214,12 @@ const display = (function() {
         }
     }
 
+    function _changePlayers () {
+        let tags = Array.from(document.querySelectorAll('div.player-tag'));
+        tags[0].innerHTML = getNames()[0];
+        tags[1].innerHTML = getNames()[1];
+    }
+
     function _toggleInputbox () {
         if(input.classList.contains('hide')) {
             input.classList.remove('hide');
@@ -201,8 +228,9 @@ const display = (function() {
             input.classList.add('hide');
         }
     }
+
     function _startGame () {
-        
+        _changePlayers();
         if (_board.innerHTML == "" || (_game.classList.contains('hide'))) {
             startButton.innerHTML = "< back";
         }
@@ -217,11 +245,19 @@ const display = (function() {
         _toggleGame();
         gameBoard.render();
     }
+
+    function _toggleAnnounce () {
+        announce.classList.add('hide');
+        gameBoard.reset();
+    }
+
     deleteButton.addEventListener("click", gameBoard.reset);
     startButton.addEventListener("click", _startGame);
+    
+    again.addEventListener("click", _toggleAnnounce);
 
     return {
-        get_names
+        getNames
     }
 })();
 

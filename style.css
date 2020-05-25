@@ -163,3 +163,40 @@ button {
 	background-color: #e8c4b8;
 	color: #251b1b;
 }
+
+#announce {
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+	background-color: rgba(0, 0, 0, 0.25);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#winner {
+	position: fixed;
+    left: 50%;
+	top: 35%;
+	transform: translate(-50%, -50%);
+	background-color: #fafafa;
+	width: 400px;
+	height: 200px;
+	font-size: 28px;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#winner>button {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	background: #363434;
+	color: #e8c4b8;
+	border-bottom: 4px solid #ababab;
+	font-size: 18px;
+}

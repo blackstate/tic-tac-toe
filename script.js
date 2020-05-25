@@ -1,5 +1,7 @@
 const gameBoard = (function () {
     const _board = document.querySelector("div#gameBoard");
+    const tags = document.querySelectorAll('div.player-tag');
+
     const _boardArr = [
         [undefined,undefined,undefined],
         [undefined,undefined,undefined],
@@ -86,6 +88,12 @@ const gameBoard = (function () {
         }
     }
 
+    function _toggleTags () {
+        tags.forEach(tag => {
+            tag.classList.contains('turn') ? tag.classList.remove('turn') : tag.classList.add('turn');
+        })
+    }
+
     function _update () {
         moveNum++;
         let position = this;
@@ -105,7 +113,7 @@ const gameBoard = (function () {
         _checkWin ();
         _updateSymbol ();
         _updateMarker ();
-
+        _toggleTags();
     }
 
     function reset () {
@@ -155,7 +163,6 @@ const display = (function() {
     const input = document.querySelector('.input-box');
     const _board = document.querySelector("div#gameBoard");
     const _game = document.querySelector('div.game');
-    const tags = document.querySelectorAll('div.player-tag');
     
     function get_names () {
         let names = Array.from(document.querySelectorAll('input'));
@@ -209,7 +216,7 @@ const display = (function() {
     startButton.addEventListener("click", _startGame);
 
     return {
-        get_names, _checkRunning
+        get_names
     }
 })();
 

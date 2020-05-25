@@ -87,12 +87,12 @@ footer {
 }
 
 #player1,#player2,.player-tag {
-	background-color: #fafafa;
+	background-color: #827e7e;
     border-bottom-left-radius: 0;
 	border-top-left-radius: 0;
 	border-radius: 0.25rem;
 	padding: 1rem;
-	color: #363434;
+	color: #fafafa;
 	margin: 30px 15px 30px 15px;
 }
 input {
@@ -125,7 +125,7 @@ button {
 }
 
 ::placeholder {
-	color: #363434;
+	color: #e8c4b8;
 }
   
 .cell {
@@ -157,9 +157,9 @@ button {
 .player-tag {
 	margin-top: 50px;
 	text-align: center;
-	background-color: #fafafa;
 }
 
 .turn {
-    background-color: #e8c4b8;
+	background-color: #e8c4b8;
+	color: #251b1b;
 }

@@ -74,7 +74,8 @@ const gameBoard = (function () {
     function _addTic() {
         if (this.innerHTML != "")
             return;
-
+        moveNum++;
+        _toggleTags();
         this.innerHTML = currentMarker;
     }
 
@@ -111,7 +112,6 @@ const gameBoard = (function () {
     }
 
     function _update () {
-        moveNum++;
         let position = this;
 
         if (position >= 0 && position < 3) {
@@ -129,7 +129,6 @@ const gameBoard = (function () {
         _checkWin ();
         _updateSymbol ();
         _updateMarker ();
-        _toggleTags();
     }
 
 
